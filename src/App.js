@@ -3,14 +3,10 @@ import { Slider } from 'react-semantic-ui-range';
 import numeral from 'numeral';
 import { Dropdown, Radio, Icon } from 'semantic-ui-react';
 import Map from './components/Map';
-import Chart from './components/Chart';
 import moment from 'moment';
-import { IoIosArrowDropleftCircle, 
-    IoIosArrowDroprightCircle } from 'react-icons/io';
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from 'react-icons/io';
 import { MdPauseCircleFilled } from "react-icons/md";
 import axios from 'axios';
-// import colormap from 'colormap';
-
 
 import './App.css';
 
@@ -20,7 +16,6 @@ require('polyfill-object.fromentries');
 
 const App = () => {
 
-
     const [pageSizeRatio, setPageSizeRatio] = useState(1);
 
     const geoCentroids = require('./data/StateCentroids.json');
@@ -28,14 +23,9 @@ const App = () => {
 
     const path = document.location.pathname.toUpperCase();
     const parsedPath = path.split('/');
-    // const dashboard = parsedPath[1] ? parsedPath[1].toLowerCase() === 'dashboard' ? true : false : false; 
     const geoParam = parsedPath[1] !== "" || 'US' ? parsedPath[1] : null;
     const paramGeoInfo = geoParam ? geoCentroids.find(centroid =>
         centroid.state === geoNames[geoParam]) : null;
-
-    const [dashboard, setDashboard] = useState(false)
-    
-
 
     const stateOptions = [{
         text: 'United States',
@@ -43,11 +33,13 @@ const App = () => {
         key: 'US'
     }];
 
-    Object.entries(geoNames).map(([id, name]) => 
-        stateOptions.push({
-            text: name,
-            value: id.toUpperCase(),
-            key: id
+
+    
+
+    Object.entries(geoNames).map(([id, name]) => stateOptions.push({
+        text: name,
+        value: id.toUpperCase(),
+        key: id
     }));
 
     const speeds = [
@@ -73,19 +65,6 @@ const App = () => {
         }
     ];
 
-    // const arcCounties = [
-    //     "DeKalb County",
-    //     "Cobb County",
-    //     "Gwinnett County",
-    //     "Fulton County",
-    //     "Cherokee County",
-    //     "Clayton County",
-    //     "Henry County",
-    //     "Douglas County",
-    //     "Fayette County",
-    //     "Rockdale County"
-    // ];
-
     const [selectedPlace, setSelectedPlace] = useState();
     // console.log(selectedPlace);
 
@@ -93,6 +72,9 @@ const App = () => {
         const { innerWidth: width } = window;
         setPageSizeRatio(width <= 600 ? .5 : 1);
     }
+
+    // const todaysDate = moment().format('MM/D/YY');
+    // const currentTime = moment('1').format('h:mm a')
 
     const [pointsObj, setPointsObj] = useState();
 
@@ -102,15 +84,15 @@ const App = () => {
         .filter(county => paramGeoInfo ? county.State === geoParam : true);
     let usdeaths = require('./data/Deaths_COV19_US_Counties.json')
         .filter(county => paramGeoInfo ? county.State === geoParam : true);
-    const pops = require('./data/pop2019.json');    
+
     const apiBaseURL = 'https://covid19-data-server.herokuapp.com/';
-    
-    // console.log(pops)
+
 
     const [usCases, setUSCases] = useState(uscases);
     const [usDeaths, setUSDeaths] = useState(usdeaths);
     const [globalCases, setGlobalCases] = useState(globalcases);
     const [globalDeaths, setGlobalDeaths] = useState(globaldeaths);
+    const [lastupdate, setLastUpdate] = useState({date: '*', time: '*'})
         
     const getInitData = () =>  {
     
@@ -135,10 +117,15 @@ const App = () => {
         axios.get(`${apiBaseURL}globaldeaths`)
             .then(res => setGlobalDeaths(res.data))
             .catch(err => console.log(err));
+
+        axios.get(`${apiBaseURL}lastupdate`)
+            .then(res => setLastUpdate(res.data[0]))
+            .catch(err => console.log(err));
     };
 
+    useEffect(() => getInitData(), []);
 
-    // console.log(globalDeaths);
+    console.log(globalDeaths);
     
     const points = require('./data/US_Counties_w_Centroid.json');
 
@@ -156,7 +143,7 @@ const App = () => {
         setPointsObj(pointsObj)
     }
 
-    const [scale, setScale] = useState('global');
+    const [scale, setScale] = useState('us counties');
     const [legendOpen, setLegendOpen] = useState(true);
 
     const selectedPlaceCases = selectedPlace ?
@@ -204,8 +191,8 @@ const App = () => {
                 : paramGeoInfo.zoom
     }
 
+    const [date, setDate] = useState(0);
     const [speed, setSpeed] = useState(500);
-    const [calcRate, setCalcRate] = useState(true);
 
 
     const dateArray = scale === 'global' && globalCases ?
@@ -228,18 +215,10 @@ const App = () => {
 
     const [month, day, year] = dateArray[dateArray.length - 1].split('/');
     const endDate = `${month}/${day}/${year}`;
-    
-    
     const [minDate, maxDate] = [
         0,
         dateArray.indexOf(endDate)
     ];
-
-    // console.log(dateArray);
-    // console.log(endDate);
-    const [date, setDate] = useState(0);
-
-
 
     // console.log(dateArray);
 
@@ -266,7 +245,6 @@ const App = () => {
         step: 1,
         onChange: value => setDate(value),
     };
-
 
     const [playStatus, setPlayStatus] = useState({
         direction: null,
@@ -300,92 +278,12 @@ const App = () => {
 
     const legendBreaks = [50, 500, 5000];
 
-    const [chartGeoOptions, setChartGeoOptions] = useState();
-    const [chartGeoSelections, setChartGeoSelections] = useState();
-
-    const handleChartGeoOptions = (data, loc1, loc2) => {
-        const options = data.map((item, i) => ({
-            text: `${item[loc1]}${item[loc1] !== "" ? ', ' : ""}${item[loc2] === 'US' ? 'United States' : item[loc2]}`,
-            value: { loc1 : item[loc1], loc2 : item[loc2]},
-            key: `option-${scale}-${i}`
-        }))
-        setChartGeoOptions(options);
-    };
-
-    // const numberOfBins = chartGeoSelections ? 
-    //     chartGeoSelections.length < 11 ? 11 
-    //     : chartGeoSelections.length : 11;
-    // const colorMap = 'phase';
-
-
-    const colors = [
-        // '#51574a',
-        // '#447c69',
-        '#74c493',
-        // '#8e8c6d',
-        '#e4bf80',
-        '#e9d78e',
-        '#e2975d',
-        '#f19670',
-        '#e16552',
-        '#c94a53',
-        '#be5168',
-        '#a34974',
-        '#993767',
-        '#65387d',
-        '#4e2472',
-        '#9163b6',
-        '#e279a3',
-        '#e0598b',
-        '#7c9fb0',
-        '#5698c4',
-        '#9abf88'
-    ]
-    
-    // colormap({
-    //     colormap: colorMap,
-    //     nshades: numberOfBins,
-    //     format: 'hex',
-    //     alpha: 1
-    //   });
-
-
-    useEffect(() => 
-        scale === 'global' ? 
-            handleChartGeoOptions(globalCases, 'Province/State', 'Country/Region') :
-        handleChartGeoOptions(usCases, 'County Name','State'), [scale])
-    
-    useEffect(() => setChartGeoSelections(), [scale]);
-
-    // useEffect(() => setChartGeoSelections([
-    //     {
-    //         "loc1":"Hubei",
-    //         "loc2":"China"
-    //     },
-    //     {
-    //         "loc1":"",
-    //         "loc2":"Italy"
-    //     },
-    //     {
-    //         "loc1":"",
-    //         "loc2":"Spain"
-    //     },
-    //     {
-    //         "loc1":"",
-    //         "loc2":"US"
-    //     }
-    // ]), [globalCases]);
-    
-    // useEffect(() => shuffle(colors), [])
-
     useEffect(() => sliderStartStop(date, speed, playStatus, 1),
         [playStatus.playing]);
 
     useEffect(() => points ? createPointsObj(points) : null, []);
 
     useEffect(() => calcPageSizeRatio(), [])
-    useEffect(() => getInitData(), []);
-
 
     return (
         <div id='main-wrapper'>
@@ -405,7 +303,6 @@ const App = () => {
                         checked={scale === 'global' ? false : true}
                         onChange={() => {
                             setSelectedPlace();
-                            setChartGeoSelections();
                             scale === 'global' ? setScale('us counties') : setScale('global')
                         }}
                     />
@@ -423,15 +320,6 @@ const App = () => {
                             onChange={(e, data) => window.location = `./${data.value}`}
                         />
                     </span>
-                    <div id={'mobile-view-selector'}>
-                    {   dashboard ?
-                        <p onClick={() => setDashboard(false)
-                        }>Swith to map</p> :
-                        <p onClick={() => setDashboard(true)
-                        }>Swith to chart</p>
-                    }
-                    </div>
-
 
                 </div>
                 <div id='death-count'>
@@ -543,23 +431,11 @@ const App = () => {
 
                 </div>
             </div>
-            <div className={'desktop-view-selector'}>
-                    {   dashboard ?
-                        <p onClick={() => setDashboard(false)
-                        }>Hide charts</p> :
-                        <p onClick={() => setDashboard(true)
-                        }>Show charts</p>
-                    }
-                    </div>
             <div
-                className={dashboard ? 'map-container mobile-hidden': 'map-container'}
-                id={dashboard ? 'map-container-dashboard' : null}
-                // style={{width: dashboard ? '60%' : null}}
+                className='map-container'
             >
                 <Map
                     // paramGeoInfo={paramGeoInfo}
-                    pops={pops}
-                    calcRate={calcRate}
                     pageSizeRatio={pageSizeRatio}
                     selectedPlace={selectedPlace}
                     setSelectedPlace={setSelectedPlace}
@@ -574,91 +450,10 @@ const App = () => {
                 />
             </div>
             {
-                dashboard ?
-            <div id={!dashboard ? 'chart-container mobile-hidden' : 'chart-container'}>
-                <div id='chart-dropdown-wrapper'>
-
-                    <Dropdown
-                    // style={{margin: '0 0 20px 0'}} 
-                    fluid
-                    multiple
-                    selection
-                    search
-                    renderLabel={(item, i) => <div 
-                          className="ui label" 
-                          value={item.value}
-                          style={{backgroundColor: colors[i]}}
-                        >
-                            {item.text}
-                            <i 
-                              onClick={() => {
-                                  const selectedList = [...chartGeoSelections];
-                                  selectedList.splice(i, 1);
-
-                                //   console.log(selectedList);
-                                  setChartGeoSelections(selectedList);
-                              }}
-                            aria-hidden="true" className="delete icon" />
-                        </div>
-                    }
-                    placeholder={'Select geographies to chart'}
-                    options={chartGeoOptions}
-                    value={chartGeoSelections ? chartGeoSelections : []}
-                    onChange={(e,data) => 
-                        setChartGeoSelections(data.value)}
-                    />
-                {
-                    chartGeoSelections ? 
-                    <div 
-                        onClick={() => setChartGeoSelections()}
-                        id='clear-selections'>clear</div> : null
-                }
-                <Radio
-                    label='per 100K people' 
-                    toggle
-                    checked={calcRate ? true : false}
-                    onChange={() => setCalcRate(calcRate ? false : true)}
-                />
-                </div>
-
-
-                <Chart
-                  pops={pops}
-                  calcRate={calcRate}
-                  colors={colors} 
-                  cases={scale === 'global' ? globalCases : usCases}
-                  deaths={scale === 'global' ? globalDeaths : usDeaths}
-                  selectedGeos={chartGeoSelections}
-                  scale={scale}
-                  dates={dateArray}
-                  label={'Confirmed Cases'}
-                //   selectedPlace={selectedPlace}
-                  dateIndex={date}
-                  
-                />
-                <Chart
-                  pops={pops}
-                  calcRate={calcRate}
-                  colors={colors} 
-                  cases={scale === 'global' ? globalDeaths : usDeaths}
-                  selectedGeos={chartGeoSelections}
-                  scale={scale}
-                  dates={dateArray}
-                  label={'Deaths'}
-                //   selectedPlace={selectedPlace}
-                  dateIndex={date}
-                  
-                />
-            </div>
-                : null}
-
-            {
                 !selectedPlace ?
 
 
-                    <div 
-                        className={dashboard ? 'mobile-hidden' : null}
-                        id={legendOpen ? 'legend-button-close' : 'legend-button-open'}>
+                    <div id={legendOpen ? 'legend-button-close' : 'legend-button-open'}>
                         <Icon name={legendOpen ? 'close circle' : 'info circle'} size={legendOpen ? 'large' : 'big'} onClick={() => setLegendOpen(legendOpen ? false : true)} />
                     </div> : null
             }
@@ -666,10 +461,7 @@ const App = () => {
                 !selectedPlace && legendOpen ?
 
 
-                    <div
-                    className={dashboard ? 'mobile-hidden' : null}
-
-                    >
+                    <div>
                         <div
                             id='left-legend'
                             className='legend'>
@@ -760,10 +552,7 @@ const App = () => {
             {
                 selectedPlace ?
 
-                    <div 
-                    className={dashboard ? 'mobile-hidden': null}
-
-                    id={'selected-info-button-close'}>
+                    <div id={'selected-info-button-close'}>
                         <Icon
                             //   disabled={false : true} 
                             name={'close circle'}
@@ -775,9 +564,7 @@ const App = () => {
 
             {
                 selectedPlace ?
-                    <div 
-                        className={dashboard ? 'info-box mobile-hidden': 'info-box'}
-                    >
+                    <div className='info-box'>
                         <div id='selected-label1'>{selectedPlace.label1 ? selectedPlace.label1 : 'All'}</div>
                         <div id='selected-label2'>{selectedPlace.label2}</div>
                         <div id='selected-cases'>Confirmed Cases {selectedPlaceCases ?
@@ -814,7 +601,7 @@ const App = () => {
                     </a>
                     }
                 </div>
-                <div style={{ width: '100%' }}> <small>Last updated 3/31/20 at 7:40 am</small></div>
+                <div style={{ width: '100%' }}> <small>Last updated {lastupdate.date} at {lastupdate.time}</small></div>
             </div>
         </div>
     )
