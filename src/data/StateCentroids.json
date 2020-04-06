@@ -1,0 +1,308 @@
+[
+    {
+    "state": "Alaska",
+    "latitude": 61.385,
+    "longitude": -152.2683,
+    "zoom": 7
+    },
+    {
+    "state": "Alabama",
+    "latitude": 32.799,
+    "longitude": -86.8073,
+    "zoom": 7
+    },
+    {
+    "state": "Arkansas",
+    "latitude": 34.9513,
+    "longitude": -92.3809,
+    "zoom": 7
+    },
+    {
+    "state": "Arizona",
+    "latitude": 33.7712,
+    "longitude": -111.3877,
+    "zoom": 7
+    },
+    {
+    "state": "California",
+    "latitude": 36.17,
+    "longitude": -119.7462,
+    "zoom": 7
+    },
+    {
+    "state": "Colorado",
+    "latitude": 39.0646,
+    "longitude": -105.3272,
+    "zoom": 7
+    },
+    {
+    "state": "Connecticut",
+    "latitude": 41.5834,
+    "longitude": -72.7622,
+    "zoom": 7
+    },
+    {
+    "state": "Delaware",
+    "latitude": 39.3498,
+    "longitude": -75.5148,
+    "zoom": 7
+    },
+    {
+    "state": "Florida",
+    "latitude": 27.8333,
+    "longitude": -81.717,
+    "zoom": 7
+    },
+    {
+    "state": "Georgia",
+    "latitude": 32.9866,
+    "longitude": -83.6487,
+    "zoom": 7
+    },
+    {
+    "state": "Hawaii",
+    "latitude": 21.1098,
+    "longitude": -157.5311,
+    "zoom": 7
+    },
+    {
+    "state": "Iowa",
+    "latitude": 42.0046,
+    "longitude": -93.214,
+    "zoom": 7
+    },
+    {
+    "state": "Idaho",
+    "latitude": 44.2394,
+    "longitude": -114.5103,
+    "zoom": 7
+    },
+    {
+    "state": "Illinois",
+    "latitude": 40.3363,
+    "longitude": -89.0022,
+    "zoom": 7
+    },
+    {
+    "state": "Indiana",
+    "latitude": 39.8647,
+    "longitude": -86.2604,
+    "zoom": 7
+    },
+    {
+    "state": "Kansas",
+    "latitude": 38.5111,
+    "longitude": -96.8005,
+    "zoom": 7
+    },
+    {
+    "state": "Kentucky",
+    "latitude": 37.669,
+    "longitude": -84.6514,
+    "zoom": 7
+    },
+    {
+    "state": "Louisiana",
+    "latitude": 31.1801,
+    "longitude": -91.8749,
+    "zoom": 7
+    },
+    {
+    "state": "Massachusetts",
+    "latitude": 42.2373,
+    "longitude": -71.5314,
+    "zoom": 7
+    },
+    {
+    "state": "Maryland",
+    "latitude": 39.0724,
+    "longitude": -76.7902,
+    "zoom": 7
+    },
+    {
+    "state": "Maine",
+    "latitude": 44.6074,
+    "longitude": -69.3977,
+    "zoom": 7
+    },
+    {
+    "state": "Michigan",
+    "latitude": 43.3504,
+    "longitude": -84.5603,
+    "zoom": 7
+    },
+    {
+    "state": "Minnesota",
+    "latitude": 45.7326,
+    "longitude": -93.9196,
+    "zoom": 7
+    },
+    {
+    "state": "Missouri",
+    "latitude": 38.4623,
+    "longitude": -92.302,
+    "zoom": 7
+    },
+    {
+    "state": "Mississippi",
+    "latitude": 32.7673,
+    "longitude": -89.6812,
+    "zoom": 7
+    },
+    {
+    "state": "Montana",
+    "latitude": 46.9048,
+    "longitude": -110.3261,
+    "zoom": 7
+    },
+    {
+    "state": "North Carolina",
+    "latitude": 35.6411,
+    "longitude": -79.8431,
+    "zoom": 7
+    },
+    {
+    "state": "North Dakota",
+    "latitude": 47.5362,
+    "longitude": -99.793,
+    "zoom": 7
+    },
+    {
+    "state": "Nebraska",
+    "latitude": 41.1289,
+    "longitude": -98.2883,
+    "zoom": 7
+    },
+    {
+    "state": "New Hampshire",
+    "latitude": 43.4108,
+    "longitude": -71.5653,
+    "zoom": 7
+    },
+    {
+    "state": "New Jersey",
+    "latitude": 40.314,
+    "longitude": -74.5089,
+    "zoom": 7
+    },
+    {
+    "state": "New Mexico",
+    "latitude": 34.8375,
+    "longitude": -106.2371,
+    "zoom": 7
+    },
+    {
+    "state": "Nevada",
+    "latitude": 38.4199,
+    "longitude": -117.1219,
+    "zoom": 7
+    },
+    {
+    "state": "New York",
+    "latitude": 42.1497,
+    "longitude": -74.9384,
+    "zoom": 7
+    },
+    {
+    "state": "Ohio",
+    "latitude": 40.3736,
+    "longitude": -82.7755,
+    "zoom": 7
+    },
+    {
+    "state": "Oklahoma",
+    "latitude": 35.5376,
+    "longitude": -96.9247,
+    "zoom": 7
+    },
+    {
+    "state": "Oregon",
+    "latitude": 44.5672,
+    "longitude": -122.1269,
+    "zoom": 7
+    },
+    {
+    "state": "Pennsylvania",
+    "latitude": 40.5773,
+    "longitude": -77.264,
+    "zoom": 7
+    },
+    {
+    "state": "Rhode Island",
+    "latitude": 41.6772,
+    "longitude": -71.5101,
+    "zoom": 7
+    },
+    {
+    "state": "South Carolina",
+    "latitude": 33.8191,
+    "longitude": -80.9066,
+    "zoom": 7
+    },
+    {
+    "state": "South Dakota",
+    "latitude": 44.2853,
+    "longitude": -99.4632,
+    "zoom": 7
+    },
+    {
+    "state": "Tennessee",
+    "latitude": 35.7449,
+    "longitude": -86.7489,
+    "zoom": 7
+    },
+    {
+    "state": "Texas",
+    "latitude": 31.106,
+    "longitude": -97.6475,
+    "zoom": 7
+    },
+    {
+    "state": "Utah",
+    "latitude": 40.1135,
+    "longitude": -111.8535,
+    "zoom": 7
+    },
+    {
+    "state": "Virginia",
+    "latitude": 37.768,
+    "longitude": -78.2057,
+    "zoom": 7
+    },
+    {
+    "state": "Vermont",
+    "latitude": 44.0407,
+    "longitude": -72.7093,
+    "zoom": 7
+    },
+    {
+    "state": "Washington",
+    "latitude": 47.3917,
+    "longitude": -121.5708,
+    "zoom": 7
+    },
+    {
+    "state": "Wisconsin",
+    "latitude": 44.2563,
+    "longitude": -89.6385,
+    "zoom": 7
+    },
+    {
+    "state": "West Virginia",
+    "latitude": 38.468,
+    "longitude": -80.9696,
+    "zoom": 7
+    },
+    {
+    "state": "Wyoming",
+    "latitude": 42.7475,
+    "longitude": -107.2085,
+    "zoom": 6.5
+    },
+    {
+    "state": "DC",
+    "latitude": 39.0724,
+    "longitude": -77.7902,
+    "zoom": 8
+    }
+    ]
