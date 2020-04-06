@@ -7,6 +7,14 @@ const Map = props => {
     const pointData2 = props.pointData2;
     const pointsObj = props.pointsObj;
 
+    // const calcRate = (value, pop, n) => {
+    //     const numerator = value * n;
+    //     const rate = numerator / pop;
+    //     // numeral(rate).format('0.00')
+    //     // console.log(rate);
+    //     return rate;
+    // }
+
 
     return (
         <LeafletMap
@@ -27,57 +35,7 @@ const Map = props => {
           animate={false}
           //   onMoveEnd={e => console.log(e.target.getCenter())}  
         >
-        {
-            pointData2 ? pointData2
-            .map((point, i) => {
-                const pointInfo = pointsObj ? pointsObj[point.countyFIPS] : null;
 
-                const lat = pointInfo ?  Number.parseFloat(pointInfo.Lat) : parseFloat(point.Lat);
-                const lng = pointInfo ?  Number.parseFloat(pointInfo.Long) : parseFloat(point.Long);
-
-                const value = point[props.dateArray[props.dateIndex]] ? point[props.dateArray[props.dateIndex]] : point[`${props.dateArray[props.dateIndex]}20`];
-                const placeLabel1 = point ? point['Province/State'] || point['County Name'] : null;
-                const placeLabel2 = point ? point['Country/Region'] || point['State'] : null;
-
-                // const otherData = pointData1.find(data =>
-                //     data['Province/State'] === placeLabel1 && 
-                //     data['Country/Region']  === placeLabel2
-                // )  ||  
-                //     pointData2.find(data =>
-                //         data['County Name'] === placeLabel1 && 
-                //         data['State']  === placeLabel2
-                //     );                ;
-
-
-
-                return (
-                !isNaN(lat) &&
-                !isNaN(lng) &&   
-                typeof lat === 'number' && 
-                typeof lng === 'number' &&
-                value > 0 ? 
-                
-                <CircleMarker
-                    key={'marker' + i} 
-                    id={i}
-                    center={[lat, lng]}
-                    radius={Math.sqrt(value/3.141592653589793) * props.pageSizeRatio}
-                    fill={true}
-                    weight={1}
-                    color={'red'}
-                    onClick={e => props.setSelectedPlace({
-                        label1 : placeLabel1,
-                        label2 : placeLabel2,
-                        // cases: otherData ? otherData[props.dateArray[props.dateIndex]] : null,
-                        // deaths: point[props.dateArray[props.dateIndex]],
-                        lat: lat,
-                        long: lng
-
-                    })}
-                /> : null
-                )}
-            ) : null
-            }
             {
             pointData1 ? pointData1
             .map((point, i) => {
@@ -144,7 +102,58 @@ const Map = props => {
                 )}
                 ) : null
             }
-                        {
+                    {
+            pointData2 ? pointData2
+            .map((point, i) => {
+                const pointInfo = pointsObj ? pointsObj[point.countyFIPS] : null;
+
+                const lat = pointInfo ?  Number.parseFloat(pointInfo.Lat) : parseFloat(point.Lat);
+                const lng = pointInfo ?  Number.parseFloat(pointInfo.Long) : parseFloat(point.Long);
+
+                const value = point[props.dateArray[props.dateIndex]] ? point[props.dateArray[props.dateIndex]] : point[`${props.dateArray[props.dateIndex]}20`];
+                const placeLabel1 = point ? point['Province/State'] || point['County Name'] : null;
+                const placeLabel2 = point ? point['Country/Region'] || point['State'] : null;
+
+                // const otherData = pointData1.find(data =>
+                //     data['Province/State'] === placeLabel1 && 
+                //     data['Country/Region']  === placeLabel2
+                // )  ||  
+                //     pointData2.find(data =>
+                //         data['County Name'] === placeLabel1 && 
+                //         data['State']  === placeLabel2
+                //     );                ;
+
+
+
+                return (
+                !isNaN(lat) &&
+                !isNaN(lng) &&   
+                typeof lat === 'number' && 
+                typeof lng === 'number' &&
+                value > 0 ? 
+                
+                <CircleMarker
+                    key={'marker' + i} 
+                    id={i}
+                    center={[lat, lng]}
+                    radius={Math.sqrt(value/3.141592653589793) * props.pageSizeRatio}
+                    fill={true}
+                    weight={1}
+                    color={'red'}
+                    onClick={e => props.setSelectedPlace({
+                        label1 : placeLabel1,
+                        label2 : placeLabel2,
+                        // cases: otherData ? otherData[props.dateArray[props.dateIndex]] : null,
+                        // deaths: point[props.dateArray[props.dateIndex]],
+                        lat: lat,
+                        long: lng
+
+                    })}
+                /> : null
+                )}
+            ) : null
+            }
+            {
             pointData1 ? pointData1
             .map((point, i) => {
                 const pointInfo = pointsObj ? pointsObj[point.countyFIPS] : null;

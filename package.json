@@ -16,6 +16,7 @@
     "react-leaflet": "^2.4.0",
     "react-scripts": "^2.1.8",
     "react-semantic-ui-range": "^0.7.0",
+    "recharts": "^1.8.5",
     "semantic-ui-react": "^0.87.3"
   },
   "scripts": {
